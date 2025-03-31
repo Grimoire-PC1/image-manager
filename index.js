@@ -25,8 +25,8 @@ const schema = new mongoose.Schema({
 const imageModel = mongoose.model("Image",schema)
 
 app.get("/", async (req,res) => {
-    const data = await imageModel.find({})
-    res.json({message : "All Image", data: data})
+    //const data = await imageModel.find({})
+    res.json({message : "Server running", data: res.statusCode})
 })
 
 app.get("/get/:id", async (req,res) => {
@@ -91,3 +91,19 @@ app.patch('/update/:id', (req, res) => {
 })
 
 app.listen(PORT, ()=>console.log("Server is running at "+PORT))
+
+const url = process.env.RENDER_URL
+const interval = 30000;
+
+//Reloader Function
+function reloadWebsite() {
+  axios.get(url)
+    .then(response => {
+      console.log(`Reloaded at ${new Date().toISOString()}: Status Code ${response.status}`);
+    })
+    .catch(error => {
+      console.error(`Error reloading at ${new Date().toISOString()}:`, error.message);
+    });
+}
+
+setInterval(reloadWebsite, interval);
