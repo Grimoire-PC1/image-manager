@@ -96,14 +96,15 @@ const url = process.env.RENDER_URL
 const interval = 30000;
 
 //Reloader Function
-function reloadWebsite() {
-  axios.get(url)
-    .then(response => {
-      console.log(`Reloaded at ${new Date().toISOString()}: Status Code ${response.status}`);
+async function reloadWebsite() {
+  const res = await fetch(`${url}`, {
+    method:"GET",
+    headers: {
+        "content-type" : "application/json"
+    }
     })
-    .catch(error => {
-      console.error(`Error reloading at ${new Date().toISOString()}:`, error.message);
-    });
+    const data = await res.json()
+    console.log(data)
 }
 
 setInterval(reloadWebsite, interval);
