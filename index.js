@@ -93,7 +93,9 @@ app.patch('/update/:id', (req, res) => {
 app.listen(PORT, ()=>console.log("Server is running at "+PORT))
 
 const url = process.env.RENDER_URL
+const url_back = process.env.BACKEND_URL
 const interval = 30000;
+
 
 //Reloader Function
 async function reloadWebsite() {
@@ -102,9 +104,19 @@ async function reloadWebsite() {
     headers: {
         "content-type" : "application/json"
     }
-    })
-    const data = await res.json()
-    console.log(data)
+  })
+  const data = await res.json()
+  console.log(data)
+
+  const res_back = await fetch(`${url_back}/server/ping/`, {
+    method:"GET",
+    headers: {
+      "ngrok-skip-browser-warning": "any",
+      "Content-Type": "application/json",
+    }
+  })
+  const data_back = await res_back.json()
+  console.log(data_back)
 }
 
 setInterval(reloadWebsite, interval);
