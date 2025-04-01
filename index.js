@@ -108,15 +108,13 @@ async function reloadWebsite() {
   const data = await res.json()
   console.log(data)
 
-  const res_back = await fetch(`${url_back}/server/ping/`, {
+  const res_back = await fetch(`${url_back}/server/ping`, {
     method:"GET",
     headers: {
       "ngrok-skip-browser-warning": "any",
-      "Content-Type": "application/json",
     }
   })
-  const data_back = await res_back.json()
-  console.log(data_back)
+  console.log(res_back)
 }
 
 setInterval(reloadWebsite, interval);
