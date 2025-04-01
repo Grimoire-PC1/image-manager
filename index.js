@@ -94,7 +94,7 @@ app.listen(PORT, ()=>console.log("Server is running at "+PORT))
 
 const url = process.env.RENDER_URL
 const url_back = process.env.BACKEND_URL
-const interval = 30000;
+const interval = 10000;
 
 
 //Reloader Function
@@ -105,8 +105,6 @@ async function reloadWebsite() {
         "content-type" : "application/json"
     }
   })
-  const data = await res.json()
-  console.log(data)
 
   const res_back = await fetch(`${url_back}/server/ping`, {
     method:"GET",
@@ -114,7 +112,9 @@ async function reloadWebsite() {
       "ngrok-skip-browser-warning": "any",
     }
   })
-  console.log(res_back)
+
+  const data = await res.json()
+  console.log(data)
 }
 
 setInterval(reloadWebsite, interval);
